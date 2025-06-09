@@ -35,6 +35,7 @@ solution_root="/home/judge/solution_folder/processed_solution"
 
 for fname in os.listdir(solution_root):
     solution_dir=os.path.join(solution_root,fname)
+    print(f'running submit_solution.py for {fname=}')
     with open(solution_dir,"r") as f:
         user_id="admin"
         try:
