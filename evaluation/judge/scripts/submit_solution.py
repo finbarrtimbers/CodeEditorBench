@@ -121,9 +121,14 @@ for fname in os.listdir(solution_root):
                                 try:
                                     # Inserting data into solution table
                                     sql = "INSERT INTO solution(model_id, problem_id, completion_id, user_id, submit_date, language, code_length, contest_id, num, result) VALUES(%s, %s, %s, %s, NOW(), %s, %s, %s, %s, 14)"
+                                    print(f"""
+INSERT INTO solution(model_id, problem_id, completion_id, user_id, submit_date, language, code_length, contest_id, num, result)
+VALUES({model_id}, {problemId}, {completion_id}, {user_id}, NOW(), '{lang}', {length}, {contest_id}, {num}, 14)
+""")
                                     cursor.execute(sql, (model_id, problemId, completion_id, user_id, lang, length, contest_id, num))
                                     solution_id = cursor.lastrowid
                                 except Exception as e:
+                                    print('we have an exception!!')
                                     raise e
                                 try:
                                     # Inserting source code into source_code table
