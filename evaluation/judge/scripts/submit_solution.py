@@ -40,7 +40,9 @@ for fname in os.listdir(solution_root):
         user_id="admin"
         try:
             for count,line in tqdm(enumerate(f)):
+                print(f'{count=}\n{line=}')
                 if not line.strip():
+                    print(f'Skipping line {count}...')
                     continue
                 if count==0:
                     modelData = json.loads(line)
