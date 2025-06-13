@@ -161,7 +161,7 @@ for _problems in ['plus','primary']:
             df_with_aggregates["polish_mem"]=df_with_aggregates["result"].apply(lambda x: 1 if x==42 else 0)
             df_with_aggregates["polish_both"]=df_with_aggregates["result"].apply(lambda x: 1 if x==43 else 0)
             df_with_aggregates["no_polish"]=df_with_aggregates["result"].apply(lambda x: 1 if x==44 else 0)
-    
+        df_with_aggregates.to_csv(f"problem_level_results_{model_name}_{_problems}.csv")
         outresults["model_name"].append(model_name)
         outresults["model_id"].append(model_id)
         outresults["solution_num"].append(df_with_aggregates["pass"].count())
