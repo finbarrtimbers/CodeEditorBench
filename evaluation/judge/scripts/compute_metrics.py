@@ -110,6 +110,7 @@ def round_dict_values(d, decimals=4):
     return {k: round(v, decimals) if isinstance(v, (int, float)) else v for k, v in d.items()}
 
 _polish=True
+os.makedirs(f"/home/judge/metrics", exist_ok=True)
 for _problems in ['plus','primary']:
     outresults={"model_name":[],
         "model_id":[],
@@ -198,7 +199,6 @@ for _problems in ['plus','primary']:
     )
     
     outresults["model_type"]="submitted"
-    os.makedirs(f"/home/judge/metrics", exist_ok=True)
     if _problems=='plus' and _polish:
         outresults.to_csv(f"/home/judge/metrics/metrics_plus.csv")
     elif _problems=='primary' and _polish:
