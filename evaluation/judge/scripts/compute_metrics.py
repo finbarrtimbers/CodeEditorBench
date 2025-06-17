@@ -143,7 +143,7 @@ for _problems in ['plus','primary']:
         cursor.execute(sql,model_id)
         results=cursor.fetchall()
         if len(results)==0:
-            print(f'No results for {model_id=}, {model_name=}. Continuing...')
+            print(f'No results for {model_id=}, {model_name=}, {_problems=}. Continuing...')
             continue
         columns = ['problem_id','title', 'result', 'contest_id', 'solution_id', 
                     'completion_id','time','memory','time_limit','memory_limit','timestd','memstd']
