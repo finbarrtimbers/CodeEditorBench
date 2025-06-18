@@ -87,7 +87,7 @@ def update_result(row):
                 else:
                     result=44
                 polish_score_time = (float(row["time_limit"]) - row["avg_time"]) / float(max(row["time_limit"], 1e-6))
-                polish_score_mem=(row["memory_limit"]-row["avg_memory"])/row["memory_limit"]
+                polish_score_mem=(row["memory_limit"]-row["avg_memory"])/max(row["memory_limit"], 1e-6)
                 polish_score_total=max((polish_score_time+polish_score_mem)/2,0)
             else:
                 result=4
