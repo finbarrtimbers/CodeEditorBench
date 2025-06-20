@@ -203,7 +203,7 @@ for _problems in ['plus','primary']:
     if _problems=='plus' and _polish:
         outresults.to_csv(f"/home/judge/metrics/metrics_plus.csv")
     elif _problems=='primary' and _polish:
-        outresults.to_csv(f"/home/judge/metrics/metircs_primary.csv")
+        outresults.to_csv(f"/home/judge/metrics/metrics_primary.csv")
 
 cursor.close()
 conn.close()
