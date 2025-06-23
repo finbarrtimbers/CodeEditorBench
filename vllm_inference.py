@@ -235,11 +235,6 @@ def main():
                 "model": args.base_model,
                 # "model_size": model.num_parameters(),
                 "model_url": f"https://huggingface.co/{args.base_model}",
-                # "do_sample": generation_config["do_sample"],
-                "num_output": generation_config["n"],
-                "temperature": generation_config["temperature"],
-                "top_p": generation_config["top_p"],
-                "top_k": generation_config["top_k"],
             }
             output_data.write(meta_data)
         for idx, output in enumerate(batch_output):
