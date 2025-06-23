@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -e
 base_models=(
     "WizardLM/WizardCoder-33B-V1.1" "deepseek-ai/deepseek-coder-33b-instruct" \
     "codefuse-ai/CodeFuse-CodeLlama-34B" "Phind/Phind-CodeLlama-34B-v2" \

@@ -104,7 +104,7 @@ def main():
     elif "Phind" in args.base_model:
         model_choice = "phind"
         group = "group1"
-    elif "Pythia" in args.base_model:
+    elif "pythia" in args.base_model:
         model_choice = "pythia"
         group = "group1"
     elif "Instruct-hf" in args.base_model:
@@ -186,11 +186,16 @@ def main():
         # Update start index
         args.start_idx = max(0, line_count - 1)
     else:
+        os.makedirs(os.path.dirname(output_data_path), exist_ok=True)
         output_data = jsonlines.open(output_data_path, mode="w", flush=True)
 
     # Load data
     if args.end_idx == -1:
         args.end_idx = None
+    files_in_dir = os.listdir(args.input_data_dir)
+    assert os.path.exists(input_data_path), (
+        f"Input data file {input_data_path} does not exist. Only files: {files_in_dir}."
+    )
     dataset = JsonlDataset(input_data_path)[args.start_idx : args.end_idx]
     dataloader = torch.utils.data.DataLoader(
         dataset, batch_size=args.batch_size, shuffle=False, collate_fn=my_collate_fn
@@ -213,6 +218,7 @@ def main():
     # Inference
     for batch in tqdm(dataloader, desc="Inference"):
         if args.prompt_type == "zero":
+            print(f"prompt_function={prompt_function}")
             batch_prompts = prompt_function(
                 batch, model_choice, "zero"
             )  # Generate prompt
