@@ -235,7 +235,6 @@ def main():
                 "model": args.base_model,
                 # "model_size": model.num_parameters(),
                 "model_url": f"https://huggingface.co/{args.base_model}",
-                "greedy_search_decoding": generation_config["best_of"] == 1,
                 # "do_sample": generation_config["do_sample"],
                 "num_output": generation_config["n"],
                 "temperature": generation_config["temperature"],
