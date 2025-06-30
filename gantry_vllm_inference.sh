@@ -1,7 +1,6 @@
 #!/bin/bash
 set -e
-source /opt/conda/etc/profile.d/conda.sh
-conda activate gantry
+echo "whichpython: $(which python)"
 base_models=(
     #"WizardLM/WizardCoder-33B-V1.1" "deepseek-ai/deepseek-coder-33b-instruct" \
     #"codefuse-ai/CodeFuse-CodeLlama-34B" "Phind/Phind-CodeLlama-34B-v2" \
