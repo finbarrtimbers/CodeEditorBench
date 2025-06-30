@@ -1,5 +1,3 @@
-from transformers import AutoModelForCausalLM, AutoTokenizer
-from transformers.generation import GenerationConfig
 import jsonlines
 import re
 import torch
