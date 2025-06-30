@@ -17,7 +17,7 @@ for base_model in "${base_models[@]}"; do
         python vllm_inference.py \
             --base_model "$base_model" \
             --dataset "$dataset" \
-            --input_data_dir "./data/" \
+            --input_data_dir "/data/" \
             --output_data_dir "/weka/finbarrt/codeeditorbench-inference/" \
             --batch_size 64 \
             --num_of_sequences 1 \
