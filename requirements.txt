@@ -57,7 +57,7 @@ msgspec==0.19.0
 multidict==6.5.0
 multiprocess==0.70.16
 nest-asyncio==1.6.0
-networkx==3.5
+networkx==3.4.2
 ninja==1.11.1.4
 numba==0.61.2
 numpy==2.2.6
