@@ -15,7 +15,22 @@ sys.path.append("./prompt_function/")
 
 def evaluate(batch_prompts, llm, samplingparams):
     generation_config = samplingparams.__dict__
-    batch_output = llm.generate(batch_prompts, samplingparams)
+    try:
+        batch_output = llm.generate(batch_prompts, samplingparams)
+    except ValueError as e:
+        if "longer than the maximum model length" in str(e):
+            print(f"\nError: {e}")
+            print(f"\nDiagnostic Information:")
+            print(f"Number of prompts in batch: {len(batch_prompts)}")
+            for i, prompt in enumerate(batch_prompts):
+                prompt_length = len(prompt) if isinstance(prompt, str) else len(str(prompt))
+                print(f"Prompt {i} length: {prompt_length} characters")
+                if prompt_length > 10000:  # Show preview of very long prompts
+                    print(f"Prompt {i} preview (first 500 chars): {prompt[:500]}...")
+                    print(f"Prompt {i} preview (last 500 chars): ...{prompt[-500:]}")
+            raise
+        else:
+            raise
 
     return generation_config, batch_output
 
