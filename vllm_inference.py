@@ -254,7 +254,7 @@ def main():
         for i, prompt in enumerate(batch_prompts):
             prompt_length = len(prompt) if isinstance(prompt, str) else len(str(prompt))
             if prompt_length > max_model_len:
-                print(f"WARNING: Prompt at absolute index {batch_indices[i]} exceeds max_model_len: {prompt_length} > {max_model_len}")
+                print(f"WARNING: Prompt at absolute index {batch_indices[i]} (dataset: {args.dataset}) exceeds max_model_len: {prompt_length} > {max_model_len}")
         
         generation_config, batch_output = evaluate(
             batch_prompts, llm, samplingparams, batch_indices, max_model_len
