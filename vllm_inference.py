@@ -21,6 +21,10 @@ def evaluate(batch_prompts, llm, samplingparams):
 
 
 def main():
+    seed = 42
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
     parser = argparse.ArgumentParser(
         description="Run inference with the specified model and dataset."
     )
@@ -127,6 +131,7 @@ def main():
     # Set hyperparameters
     if args.num_of_sequences == 1:
         samplingparams = SamplingParams(
+            seed=seed,  # Set a fixed seed for reproducibility
             n=args.num_of_sequences,
             temperature=0.0,
             max_tokens=2048,
