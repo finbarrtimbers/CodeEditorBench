@@ -13,7 +13,7 @@ import os
 sys.path.append("./prompt_function/")
 
 
-def evaluate(batch_prompts, llm, samplingparams):
+def evaluate(batch_prompts, llm, samplingparams, batch_indices=None, max_model_len=None):
     generation_config = samplingparams.__dict__
     try:
         batch_output = llm.generate(batch_prompts, samplingparams)
@@ -24,10 +24,12 @@ def evaluate(batch_prompts, llm, samplingparams):
             print(f"Number of prompts in batch: {len(batch_prompts)}")
             for i, prompt in enumerate(batch_prompts):
                 prompt_length = len(prompt) if isinstance(prompt, str) else len(str(prompt))
-                print(f"Prompt {i} length: {prompt_length} characters")
-                if prompt_length > 10000:  # Show preview of very long prompts
-                    print(f"Prompt {i} preview (first 500 chars): {prompt[:500]}...")
-                    print(f"Prompt {i} preview (last 500 chars): ...{prompt[-500:]}")
+                absolute_idx = batch_indices[i] if batch_indices else i
+                if max_model_len and prompt_length > max_model_len:
+                    print(f"Prompt at absolute index {absolute_idx} exceeds max length: {prompt_length} > {max_model_len}")
+                    if prompt_length > 10000:  # Show preview of very long prompts
+                        print(f"  Preview (first 500 chars): {prompt[:500]}...")
+                        print(f"  Preview (last 500 chars): ...{prompt[-500:]}")
             raise
         else:
             raise
@@ -244,8 +246,18 @@ def main():
             batch_prompts = prompt_function(batch, model_choice, "three")
         elif args.prompt_type == "cot":
             batch_prompts = prompt_function(batch, model_choice, "cot")
+        
+        # Get absolute indices for this batch
+        batch_indices = [idx.item() for idx in batch["idx"]]
+        
+        # Check for prompts exceeding max length before generation
+        for i, prompt in enumerate(batch_prompts):
+            prompt_length = len(prompt) if isinstance(prompt, str) else len(str(prompt))
+            if prompt_length > max_model_len:
+                print(f"WARNING: Prompt at absolute index {batch_indices[i]} exceeds max_model_len: {prompt_length} > {max_model_len}")
+        
         generation_config, batch_output = evaluate(
-            batch_prompts, llm, samplingparams
+            batch_prompts, llm, samplingparams, batch_indices, max_model_len
         )  # Get output
         if not meta_data_flag:
             meta_data_flag = True
