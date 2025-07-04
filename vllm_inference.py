@@ -242,6 +242,7 @@ def main():
     start_time = time.time()
 
     # Inference
+    seen_problem_ids = set()
     for batch in tqdm(dataloader, desc="Inference"):
         if args.prompt_type == "zero":
             print(f"prompt_function={prompt_function}")
@@ -275,7 +276,6 @@ def main():
                 "model_url": f"https://huggingface.co/{args.base_model}",
             }
             output_data.write(meta_data)
-        seen_problem_ids = set()
         for idx, output in enumerate(batch_output):
             output = [data.text for data in output.outputs]
             problem_id = batch["idx"][idx].item()
