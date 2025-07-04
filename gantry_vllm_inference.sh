@@ -11,7 +11,7 @@ base_models=(
     #"m-a-p/OpenCodeInterpreter-DS-6.7B" "m-a-p/OpenCodeInterpreter-DS-33B" \
 )
 #datasets=("debug" "translate" "polishment" "switch")
-datasets=("debug" "translate" "polishment" "switch")
+datasets=("debug" "translate")
 
 for base_model in "${base_models[@]}"; do
     for dataset in "${datasets[@]}"; do
