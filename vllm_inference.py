@@ -173,8 +173,7 @@ def main():
         )
 
     # Input file name
-    input_data_path = args.input_data_dir + f"code_{args.dataset}_primary.jsonl"
-    # input_data_path = args.input_data_dir + f"code_{args.dataset}_plus.jsonl"
+    input_data_path = args.input_data_dir + f"code_{args.dataset}_plus.jsonl"
     model_name = args.base_model.split("/")[-1].replace("-", "_").replace(".", "_")
     # Output file name
     # Make sure the directory exists
