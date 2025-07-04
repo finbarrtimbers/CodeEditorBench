@@ -275,8 +275,13 @@ def main():
                 "model_url": f"https://huggingface.co/{args.base_model}",
             }
             output_data.write(meta_data)
+        seen_problem_ids = set()
         for idx, output in enumerate(batch_output):
             output = [data.text for data in output.outputs]
+            problem_id = batch["idx"][idx].item()
+            if problem_id in seen_problem_ids:
+                raise ValueError(f"Duplicate problem_id found: {problem_id}")
+            seen_problem_ids.add(problem_id)
             if args.dataset == "debug":
                 new_data = {
                     "problem_id": batch["idx"][idx].item(),
