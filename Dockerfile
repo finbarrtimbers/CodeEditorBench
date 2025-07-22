@@ -1,21 +1,11 @@
 FROM xliudg/code_editor_bench:latest
 
-# (We keep every original command, but also launch the script).
-RUN printf '%s\n' \
-    '#!/bin/bash' \
-    'set -e' \
-    '' \
-    '# --- Original startup sequence ---' \
-    'service mysql start' \
-    'service php8.1-fpm start' \
-    'judged' \
-    '' \
-    '# --- Your addition ---' \
-    'nohup bash /home/judge/scripts/run_judge.sh \\' \
-    '      > /home/judge/scripts/runlog.out 2>&1 &' \
-    '' \
-    '# --- Keep container in foreground ---' \
-    'nginx -g "daemon off;"' \
-  > /start.sh && chmod +x /start.sh
+# PHP-FPM 8.1 lives in Jammy/Debian Bookworm’s default repos
+RUN apt-get update \
+ && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+      php8.1-fpm \
+ && rm -rf /var/lib/apt/lists/*
+
+COPY start.sh /start.sh
 
 ENTRYPOINT ["/start.sh"]
